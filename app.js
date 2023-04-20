@@ -11,20 +11,27 @@ new Vue({
         resulDanoM: '',
         resulCuradoJ: '',
 
-        ocultarHidden: false
+        iniciarGame: false
 
     },
     methods: {
         ataqueScores() {
             let danoJogador = Math.floor(Math.random() * (this.ataqueJogador[1] - this.ataqueJogador[0]) + this.ataqueJogador[0]);
       
-            this.resulDano += this.vidaMonstro -= danoJogador;
+            this.vidaMonstro -= danoJogador;
             this.resulDanoJ = danoJogador;
 
             let danoMonstro = Math.floor(Math.random() * (this.ataqueMonstro[1] - this.ataqueMonstro[0]) + this.ataqueMonstro[0]);
 
             this.vidaJogador -= danoMonstro;
             this.resulDanoM = danoMonstro;
+
+            if(this.vidaJogador < 0) {
+                this.vidaJogador = 0;
+            } else if (this.vidaMonstro < 0) {
+                this.vidaMonstro = 0;
+            }
+
         },
         especialScores() {
             let danoEspecialJogador = Math.floor(Math.random() * (this.ataqueJogador[1] - this.ataqueJogador[0]) + this.ataqueJogador[0]) + this.ataqueEspecial;
@@ -38,6 +45,11 @@ new Vue({
             this.resulDanoM = danoEspecialMonstro;
             this.resulDanoJ = danoEspecialJogador;
 
+            if(this.vidaJogador < 0) {
+                this.vidaJogador = 0;
+            } else if (this.vidaMonstro < 0) {
+                this.vidaMonstro = 0;
+            }
 
         },
         curarScores() {
@@ -50,12 +62,22 @@ new Vue({
             this.resulDanoM = danoMonstro;
             this.resulCuradoJ = jogadorCurado;
         },
-    
-    },
-    computed:{
-        desistirJogo() {
-            
-        }
+        gameIniciado() {
+            this.iniciarGame = true;
+            this.vidaJogador = 100;
+            this.vidaMonstro = 100;
 
-    }
+            this.resulDanoJ = ''
+            this.resulDanoM = ''
+            this.resulCuradoJ = ''
+
+        },
+        gameDesistido() {
+            this.iniciarGame = false
+
+            this.resulDanoJ = ''
+            this.resulDanoM = ''
+            this.resulCuradoJ = ''
+        }
+    },
 })

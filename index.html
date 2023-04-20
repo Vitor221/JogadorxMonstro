@@ -28,17 +28,17 @@
             </div>
         </div>
         <div class="panel result">
-            <div class="win">Você ganhou!!! :)</div>
-            <div class="lose">Você perdeu! :(</div>
+            <div v-if="vidaJogador > 0 && vidaMonstro == 0" class="win">Você ganhou!!! :)</div>
+            <div v-if="vidaMonstro > 0 && vidaJogador == 0" class="lose">Você perdeu! :(</div>
         </div>
         <div class="panel buttons">
-            <template>
+            <template v-if="iniciarGame == true">
                 <button class="btn attack" @click="ataqueScores">Ataque</button>
                 <button class="btn espacial-attack" @click="especialScores">Ataque Especial</button>
                 <button class="btn heal" @click="curarScores">Curar</button>
-                <button class="btn give-up">Desistir</button>
+                <button @click="gameDesistido()" class="btn give-up">Desistir</button>
             </template>
-            <button class="btn new-game">Iniciar Jogo</button>
+            <button v-if="iniciarGame == false" class="btn new-game" @click="gameIniciado()">Iniciar Jogo</button>
         </div>
         <div class="panel logs">
             <ul>
